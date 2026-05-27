@@ -1,0 +1,16 @@
+<article class="recipe-card">
+  <%= image_tag recipe.image_url, alt: recipe.title, class: "recipe-card-image" if recipe.image_url.present? %>
+  <div class="recipe-card-body">
+    <div class="recipe-meta-row">
+      <span class="pill" style="--pill-color: <%= recipe.category.color %>"><%= recipe.category.name %></span>
+      <span><%= recipe.cooking_time %> мин</span>
+    </div>
+    <h2><%= link_to recipe.title, recipe_path(recipe) %></h2>
+    <p><%= recipe.description %></p>
+    <div class="recipe-meta-row">
+      <span><%= recipe.difficulty_name %></span>
+      <span><%= recipe.servings %> порц.</span>
+      <span><%= recipe.views_count %> просмотров</span>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,48 @@
+<% content_for :title, "Поисковик рецептов" %>
+
+<section class="hero-section">
+  <div>
+    <p class="eyebrow">Русскоязычная база домашних рецептов</p>
+    <h1>Найдите блюдо по названию, времени или ингредиентам</h1>
+    <p class="hero-copy">Каталог помогает быстро подобрать рецепт для завтрака, ужина или семейного обеда.</p>
+  </div>
+</section>
+
+<section class="search-section" data-controller="recipe-search">
+  <%= form_with url: recipes_path, method: :get, class: "search-form", data: { recipe_search_target: "form", action: "input->recipe-search#search change->recipe-search#search" } do |form| %>
+    <label>
+      <span>Поиск</span>
+      <%= form.search_field :q, value: params[:q], placeholder: "Например: борщ, курица, сырники", data: { recipe_search_target: "query" } %>
+    </label>
+
+    <label>
+      <span>Категория</span>
+      <%= form.select :category_id, options_from_collection_for_select(@categories, :id, :name, params[:category_id]), { include_blank: "Все категории" }, data: { recipe_search_target: "category" } %>
+    </label>
+
+    <label>
+      <span>Ингредиенты</span>
+      <%= form.text_field :ingredients, value: params[:ingredients], placeholder: "курица, картофель", data: { recipe_search_target: "ingredients" } %>
+    </label>
+
+    <label>
+      <span>До минут</span>
+      <%= form.number_field :max_time, value: params[:max_time], min: 1, max: 600, placeholder: "45", data: { recipe_search_target: "maxTime" } %>
+    </label>
+
+    <label>
+      <span>Сортировка</span>
+      <%= form.select :sort, options_for_select([ [ "Сначала новые", "recent" ], [ "Популярные", "popular" ], [ "Быстрые", "time" ] ], params[:sort]), {}, data: { recipe_search_target: "sort" } %>
+    </label>
+
+    <%= form.submit "Найти", class: "primary-button" %>
+  <% end %>
+
+  <div class="result-summary" data-recipe-search-target="summary">
+    Найдено рецептов: <%= @recipes.size %>
+  </div>
+
+  <div class="recipe-grid" data-recipe-search-target="results">
+    <%= render partial: "card", collection: @recipes, as: :recipe %>
+  </div>
+</section>
