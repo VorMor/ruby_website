@@ -1,0 +1,37 @@
+<% content_for :title, @recipe.title %>
+
+<article class="recipe-page">
+  <div class="recipe-cover">
+    <%= image_tag @recipe.image_url, alt: @recipe.title if @recipe.image_url.present? %>
+  </div>
+
+  <div class="recipe-detail">
+    <%= link_to "Вернуться к поиску", recipes_path, class: "back-link" %>
+    <p class="eyebrow"><%= @recipe.category.name %></p>
+    <h1><%= @recipe.title %></h1>
+    <p class="lead"><%= @recipe.description %></p>
+
+    <dl class="facts">
+      <div><dt>Время</dt><dd><%= @recipe.cooking_time %> мин</dd></div>
+      <div><dt>Сложность</dt><dd><%= @recipe.difficulty_name %></dd></div>
+      <div><dt>Порции</dt><dd><%= @recipe.servings %></dd></div>
+    </dl>
+
+    <section>
+      <h2>Ингредиенты</h2>
+      <ul class="ingredient-list">
+        <% @recipe.recipe_ingredients.each do |item| %>
+          <li>
+            <span><%= item.ingredient.name %></span>
+            <strong><%= item.amount_with_unit %></strong>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Приготовление</h2>
+      <p class="instructions"><%= @recipe.instructions %></p>
+    </section>
+  </div>
+</article>

@@ -1,10 +1,457 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+:root {
+  --bg: #fffaf3;
+  --surface: #ffffff;
+  --surface-muted: #f7efe4;
+  --text: #1f2933;
+  --muted: #647067;
+  --line: #eadfce;
+  --accent: #2f855a;
+  --accent-dark: #256d49;
+  --danger: #b42318;
+  --shadow: 0 18px 45px rgba(81, 59, 34, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, "Helvetica Neue", sans-serif;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--accent-dark);
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.site-header {
+  background: rgba(255, 250, 243, 0.94);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.site-nav {
+  align-items: center;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1180px;
+  padding: 14px 20px;
+}
+
+.brand {
+  color: var(--text);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.nav-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+main {
+  margin: 0 auto;
+  max-width: 1180px;
+  padding: 28px 20px 56px;
+}
+
+.hero-section {
+  align-items: end;
+  background: linear-gradient(rgba(31, 41, 51, 0.48), rgba(31, 41, 51, 0.48)),
+    url("https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1800&q=80") center/cover;
+  border-radius: 8px;
+  color: #fff;
+  display: grid;
+  min-height: 360px;
+  padding: 44px;
+}
+
+.hero-section h1 {
+  font-size: 42px;
+  line-height: 1.1;
+  margin: 8px 0 12px;
+  max-width: 760px;
+}
+
+.hero-copy,
+.lead {
+  color: inherit;
+  font-size: 18px;
+  max-width: 720px;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.hero-section .eyebrow {
+  color: #d9f99d;
+}
+
+.search-section,
+.admin-panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  margin-top: 22px;
+  padding: 22px;
+}
+
+.search-form,
+.admin-form {
+  display: grid;
+  gap: 16px;
+}
+
+.search-form {
+  grid-template-columns: 1.6fr 1fr 1.2fr 0.8fr 0.9fr auto;
+  align-items: end;
+}
+
+label span {
+  color: var(--muted);
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+input,
+select,
+textarea {
+  background: #fff;
+  border: 1px solid #d9ccb9;
+  border-radius: 8px;
+  color: var(--text);
+  font: inherit;
+  min-height: 42px;
+  padding: 10px 12px;
+  width: 100%;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.primary-button,
+button,
+.link-button,
+.danger-button {
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.primary-button {
+  background: var(--accent);
+  color: #fff;
+  display: inline-flex;
+  justify-content: center;
+  padding: 11px 16px;
+}
+
+.primary-button:hover {
+  background: var(--accent-dark);
+}
+
+.result-summary {
+  color: var(--muted);
+  font-weight: 700;
+  margin: 20px 0 14px;
+}
+
+.recipe-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.recipe-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.recipe-card-image {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  width: 100%;
+}
+
+.recipe-card-body {
+  padding: 16px;
+}
+
+.recipe-card h2 {
+  font-size: 20px;
+  line-height: 1.25;
+  margin: 12px 0 8px;
+}
+
+.recipe-card p {
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.recipe-meta-row {
+  align-items: center;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 14px;
+  gap: 10px;
+}
+
+.pill {
+  background: color-mix(in srgb, var(--pill-color, var(--accent)) 18%, #fff);
+  border: 1px solid color-mix(in srgb, var(--pill-color, var(--accent)) 40%, #fff);
+  border-radius: 999px;
+  color: var(--text);
+  font-weight: 700;
+  padding: 4px 9px;
+}
+
+.recipe-page {
+  display: grid;
+  gap: 28px;
+  grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr);
+}
+
+.recipe-cover img {
+  border-radius: 8px;
+  height: 100%;
+  max-height: 720px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.recipe-detail {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 28px;
+}
+
+.recipe-detail h1 {
+  font-size: 38px;
+  line-height: 1.1;
+  margin: 10px 0 12px;
+}
+
+.facts {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 24px 0;
+}
+
+.facts div,
+.stat-grid div {
+  background: var(--surface-muted);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.facts dt {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.facts dd {
+  font-weight: 800;
+  margin: 4px 0 0;
+}
+
+.ingredient-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ingredient-list li {
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.instructions {
+  white-space: pre-line;
+}
+
+.admin-main {
+  max-width: 1120px;
+}
+
+.admin-title-row {
+  align-items: center;
+  display: flex;
+  gap: 18px;
+  justify-content: space-between;
+}
+
+.stat-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 18px;
+}
+
+.stat-grid strong {
+  display: block;
+  font-size: 30px;
+}
+
+.stat-grid span {
+  color: var(--muted);
+}
+
+.admin-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.admin-table th,
+.admin-table td {
+  border-bottom: 1px solid var(--line);
+  padding: 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.table-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.link-button {
+  background: transparent;
+  color: var(--accent-dark);
+  padding: 0;
+}
+
+.danger-button {
+  background: #fee4e2;
+  color: var(--danger);
+  padding: 7px 10px;
+}
+
+.form-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.checkbox-row {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.checkbox-row input {
+  min-height: auto;
+  width: auto;
+}
+
+.form-errors,
+.flash {
+  border-radius: 8px;
+  margin: 16px auto;
+  max-width: 1180px;
+  padding: 12px 16px;
+}
+
+.form-errors,
+.flash-alert {
+  background: #fff1f0;
+  color: var(--danger);
+}
+
+.flash-notice {
+  background: #e8f7ee;
+  color: var(--accent-dark);
+}
+
+.color-dot {
+  border-radius: 999px;
+  display: inline-block;
+  height: 12px;
+  margin-right: 8px;
+  width: 12px;
+}
+
+.auth-panel {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 460px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 920px) {
+  .search-form,
+  .recipe-page {
+    grid-template-columns: 1fr;
+  }
+
+  .recipe-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stat-grid,
+  .facts,
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .hero-section {
+    min-height: 300px;
+    padding: 24px;
+  }
+
+  .hero-section h1,
+  .recipe-detail h1 {
+    font-size: 30px;
+  }
+
+  .recipe-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .site-nav,
+  .admin-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
