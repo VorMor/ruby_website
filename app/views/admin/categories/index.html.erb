@@ -1,0 +1,28 @@
+<section class="admin-panel">
+  <div class="admin-title-row">
+    <h1>Категории</h1>
+    <%= link_to "Новая категория", new_admin_category_path, class: "primary-button" %>
+  </div>
+
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Название</th>
+        <th>Описание</th>
+        <th>Действия</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @categories.each do |category| %>
+        <tr>
+          <td><span class="color-dot" style="background: <%= category.color %>"></span><%= category.name %></td>
+          <td><%= category.description %></td>
+          <td class="table-actions">
+            <%= link_to "Редактировать", edit_admin_category_path(category) %>
+            <%= button_to "Удалить", admin_category_path(category), method: :delete, class: "danger-button" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>
