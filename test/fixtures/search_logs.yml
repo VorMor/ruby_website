@@ -1,0 +1,7 @@
+basic:
+  query: каша
+  category: breakfast
+  ingredient_names: молоко
+  results_count: 1
+  ip_address: 127.0.0.1
+  user_agent: Rails test

@@ -1,0 +1,13 @@
+porridge_oats:
+  recipe: porridge
+  ingredient: oats
+  amount: 80
+  unit: г
+  note:
+
+porridge_milk:
+  recipe: porridge
+  ingredient: milk
+  amount: 300
+  unit: мл
+  note:
