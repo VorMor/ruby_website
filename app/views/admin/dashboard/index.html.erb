@@ -1,0 +1,40 @@
+<section class="admin-panel">
+  <div class="admin-title-row">
+    <div>
+      <p class="eyebrow">Панель администратора</p>
+      <h1>Управление поисковиком рецептов</h1>
+    </div>
+    <%= link_to "Добавить рецепт", new_admin_recipe_path, class: "primary-button" %>
+  </div>
+
+  <div class="stat-grid">
+    <div><strong><%= @recipes_count %></strong><span>рецептов</span></div>
+    <div><strong><%= @published_count %></strong><span>опубликовано</span></div>
+    <div><strong><%= @categories_count %></strong><span>категорий</span></div>
+    <div><strong><%= @ingredients_count %></strong><span>ингредиентов</span></div>
+  </div>
+</section>
+
+<section class="admin-panel">
+  <h2>Последние поисковые запросы</h2>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Запрос</th>
+        <th>Категория</th>
+        <th>Ингредиенты</th>
+        <th>Результатов</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @recent_searches.each do |search| %>
+        <tr>
+          <td><%= search.query.presence || "Без текста" %></td>
+          <td><%= search.category&.name || "Все" %></td>
+          <td><%= search.ingredient_names.presence || "-" %></td>
+          <td><%= search.results_count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>
