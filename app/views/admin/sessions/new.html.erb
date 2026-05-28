@@ -1,0 +1,17 @@
+<section class="admin-panel auth-panel">
+  <h1>Вход в админку</h1>
+
+  <%= form_with url: admin_login_path, class: "admin-form" do |form| %>
+    <label>
+      <span>Email</span>
+      <%= form.email_field :email, value: "admin@example.ru", required: true %>
+    </label>
+
+    <label>
+      <span>Пароль</span>
+      <%= form.password_field :password, value: "password123", required: true %>
+    </label>
+
+    <%= form.submit "Войти", class: "primary-button" %>
+  <% end %>
+</section>
