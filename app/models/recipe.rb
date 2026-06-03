@@ -10,8 +10,11 @@ class Recipe < ApplicationRecord
   slug_from :title
 
   belongs_to :category
+  belongs_to :user, optional: true
   has_many :recipe_ingredients, dependent: :destroy
   has_many :ingredients, through: :recipe_ingredients
+  has_many :favorite_recipes, dependent: :destroy
+  has_many :favorited_by_users, through: :favorite_recipes, source: :user
 
   accepts_nested_attributes_for :recipe_ingredients, allow_destroy: true
 
@@ -63,6 +66,15 @@ class Recipe < ApplicationRecord
 
   def difficulty_name
     DIFFICULTIES.fetch(difficulty)
+  end
+
+  def owned_by?(candidate_user)
+    user_id.present? && user_id == candidate_user&.id
+  end
+
+  def favorited_by?(candidate_user)
+    return false unless candidate_user
+    favorite_recipes.exists?(user_id: candidate_user.id)
   end
 
   def to_param
