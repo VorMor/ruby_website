@@ -1,0 +1,28 @@
+<% content_for :title, @user.full_name %>
+
+<section class="admin-panel">
+  <div class="profile-header">
+    <div>
+      <p class="eyebrow">Автор рецептов</p>
+      <h1><%= @user.full_name %></h1>
+      <% if @user.bio.present? %>
+        <p class="profile-bio"><%= @user.bio %></p>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<section class="search-section">
+  <div class="admin-title-row">
+    <h2>Рецепты автора</h2>
+    <span class="muted-text"><%= @recipes.size %> опубликовано</span>
+  </div>
+
+  <% if @recipes.any? %>
+    <div class="recipe-grid">
+      <%= render partial: "recipes/card", collection: @recipes, as: :recipe %>
+    </div>
+  <% else %>
+    <p class="muted-text">У автора пока нет опубликованных рецептов.</p>
+  <% end %>
+</section>
