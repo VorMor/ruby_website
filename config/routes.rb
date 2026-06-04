@@ -2,7 +2,18 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   root "recipes#index"
+  get "signup", to: "users#new"
+  get "login", to: "user_sessions#new"
+  post "login", to: "user_sessions#create"
+  delete "logout", to: "user_sessions#destroy"
+
+  resources :users, only: %i[create show]
   resources :recipes, only: %i[index show]
+
+  namespace :account do
+    root "profiles#show"
+    resource :profile, only: :show
+  end
 
   namespace :api, defaults: { format: :json } do
     resources :recipes

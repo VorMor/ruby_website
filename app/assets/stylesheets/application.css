@@ -64,6 +64,10 @@ img {
   gap: 14px;
 }
 
+.nav-actions form {
+  margin: 0;
+}
+
 main {
   margin: 0 auto;
   max-width: 1180px;
@@ -415,6 +419,27 @@ button,
 .back-link {
   display: inline-block;
   margin-bottom: 18px;
+}
+
+.muted-text {
+  color: var(--muted);
+}
+
+.profile-header {
+  align-items: center;
+  display: flex;
+  gap: 18px;
+  justify-content: space-between;
+}
+
+.profile-header h1 {
+  margin: 8px 0 0;
+}
+
+.profile-bio {
+  color: var(--muted);
+  max-width: 720px;
+  white-space: pre-line;
 }
 
 @media (max-width: 920px) {

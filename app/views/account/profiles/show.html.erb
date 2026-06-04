@@ -1,0 +1,32 @@
+<% content_for :title, "Личный кабинет" %>
+
+<section class="admin-panel">
+  <div class="profile-header">
+    <div>
+      <p class="eyebrow">Личный кабинет</p>
+      <h1><%= current_user.full_name %></h1>
+      <p class="muted-text"><%= current_user.email %></p>
+    </div>
+
+    <div class="table-actions">
+      <%= link_to "Мои рецепты", account_recipes_path, class: "primary-button" %>
+      <%= link_to "Избранное", account_favorites_path, class: "secondary-button" %>
+      <%= link_to "Публичная страница", user_path(current_user), class: "secondary-button" %>
+    </div>
+  </div>
+
+  <% if current_user.bio.present? %>
+    <p class="profile-bio"><%= current_user.bio %></p>
+  <% end %>
+
+  <div class="stat-grid">
+    <div>
+      <strong><%= @recipes_count %></strong>
+      <span>созданных рецептов</span>
+    </div>
+    <div>
+      <strong><%= @favorites_count %></strong>
+      <span><%= link_to "избранных рецептов", account_favorites_path %></span>
+    </div>
+  </div>
+</section>
