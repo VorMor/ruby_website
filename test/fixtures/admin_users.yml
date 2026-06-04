@@ -1,0 +1,6 @@
+admin:
+  email: admin@example.ru
+  password_digest: <%= BCrypt::Password.create("secret123") %>
+  full_name: Тестовый администратор
+  role: admin
+  active: true

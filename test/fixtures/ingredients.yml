@@ -1,0 +1,9 @@
+oats:
+  name: овсяные хлопья
+  slug: ovsyanye-hlopya
+  description: Основа быстрых завтраков.
+
+milk:
+  name: молоко
+  slug: moloko
+  description: Молочный продукт.

@@ -1,0 +1,25 @@
+porridge:
+  title: Овсяная каша
+  slug: ovsyanaya-kasha
+  description: Быстрый завтрак на молоке.
+  instructions: Сварить хлопья в молоке до мягкости.
+  cooking_time: 10
+  servings: 2
+  difficulty: easy
+  image_url: https://example.com/porridge.jpg
+  published: true
+  views_count: 3
+  category: breakfast
+
+hidden_soup:
+  title: Черновик супа
+  slug: chernovik-supa
+  description: Неопубликованный рецепт.
+  instructions: Тестовая инструкция.
+  cooking_time: 40
+  servings: 4
+  difficulty: medium
+  image_url: https://example.com/soup.jpg
+  published: false
+  views_count: 0
+  category: soups

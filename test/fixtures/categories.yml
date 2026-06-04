@@ -1,0 +1,11 @@
+breakfast:
+  name: Завтраки
+  slug: zavtraki
+  description: Блюда для утра.
+  color: "#f59e0b"
+
+soups:
+  name: Супы
+  slug: supy
+  description: Первые блюда.
+  color: "#22c55e"

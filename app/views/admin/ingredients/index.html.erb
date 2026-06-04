@@ -1,0 +1,28 @@
+<section class="admin-panel">
+  <div class="admin-title-row">
+    <h1>Ингредиенты</h1>
+    <%= link_to "Новый ингредиент", new_admin_ingredient_path, class: "primary-button" %>
+  </div>
+
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Название</th>
+        <th>Описание</th>
+        <th>Действия</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @ingredients.each do |ingredient| %>
+        <tr>
+          <td><%= ingredient.name %></td>
+          <td><%= ingredient.description %></td>
+          <td class="table-actions">
+            <%= link_to "Редактировать", edit_admin_ingredient_path(ingredient) %>
+            <%= button_to "Удалить", admin_ingredient_path(ingredient), method: :delete, class: "danger-button" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

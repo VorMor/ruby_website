@@ -1,0 +1,15 @@
+<%= render "shared/errors", record: ingredient %>
+
+<%= form_with model: [ :admin, ingredient ], class: "admin-form" do |form| %>
+  <label>
+    <span>Название</span>
+    <%= form.text_field :name, required: true %>
+  </label>
+
+  <label>
+    <span>Описание</span>
+    <%= form.text_area :description, rows: 4 %>
+  </label>
+
+  <%= form.submit "Сохранить", class: "primary-button" %>
+<% end %>
