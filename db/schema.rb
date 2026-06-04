@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_03_171854) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_26_144055) do
   create_table "admin_users", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
@@ -32,16 +32,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_03_171854) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_categories_on_name", unique: true
     t.index ["slug"], name: "index_categories_on_slug", unique: true
-  end
-
-  create_table "favorite_recipes", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.integer "recipe_id", null: false
-    t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
-    t.index ["recipe_id"], name: "index_favorite_recipes_on_recipe_id"
-    t.index ["user_id", "recipe_id"], name: "index_favorite_recipes_on_user_id_and_recipe_id", unique: true
-    t.index ["user_id"], name: "index_favorite_recipes_on_user_id"
   end
 
   create_table "ingredients", force: :cascade do |t|
@@ -80,7 +70,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_03_171854) do
     t.string "slug", null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
     t.integer "views_count", default: 0, null: false
     t.index ["category_id"], name: "index_recipes_on_category_id"
     t.index ["cooking_time"], name: "index_recipes_on_cooking_time"
@@ -88,7 +77,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_03_171854) do
     t.index ["published"], name: "index_recipes_on_published"
     t.index ["slug"], name: "index_recipes_on_slug", unique: true
     t.index ["title"], name: "index_recipes_on_title"
-    t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 
   create_table "search_logs", force: :cascade do |t|
@@ -105,23 +93,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_03_171854) do
     t.index ["query"], name: "index_search_logs_on_query"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.boolean "active", default: true, null: false
-    t.text "bio"
-    t.datetime "created_at", null: false
-    t.string "email", null: false
-    t.string "full_name", null: false
-    t.string "password_digest", null: false
-    t.datetime "updated_at", null: false
-    t.index ["active"], name: "index_users_on_active"
-    t.index ["email"], name: "index_users_on_email", unique: true
-  end
-
-  add_foreign_key "favorite_recipes", "recipes"
-  add_foreign_key "favorite_recipes", "users"
   add_foreign_key "recipe_ingredients", "ingredients"
   add_foreign_key "recipe_ingredients", "recipes"
   add_foreign_key "recipes", "categories"
-  add_foreign_key "recipes", "users"
   add_foreign_key "search_logs", "categories"
 end

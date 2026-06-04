@@ -1,45 +1,17 @@
-puts "Очистка старых данных..."
-
-FavoriteRecipe.destroy_all
-RecipeIngredient.destroy_all
-Recipe.destroy_all
-Ingredient.destroy_all
-Category.destroy_all
-User.destroy_all
-
-puts "Создание пользователей..."
-
-user1 = User.create!(
-  email: "user@example.com",
-  full_name: "Обычный пользователь",
-  password: "password123",
-  password_confirmation: "password123"
-)
-
-user2 = User.create!(
-  email: "admin@example.com",
-  full_name: "Администратор",
-  password: "password456",
-  password_confirmation: "password456"
-)
-
-puts "Создание категорий..."
-
-categories_data = [
+categories = [
   { name: "Завтраки", description: "Быстрые и сытные блюда для начала дня.", color: "#f59e0b" },
   { name: "Супы", description: "Домашние супы для будней и выходных.", color: "#22c55e" },
   { name: "Горячее", description: "Основные блюда из мяса, птицы, рыбы и овощей.", color: "#ef4444" },
   { name: "Салаты", description: "Легкие и праздничные салаты.", color: "#14b8a6" },
   { name: "Выпечка", description: "Пироги, булочки и другая домашняя выпечка.", color: "#a855f7" }
-]
+].index_by { |category| category[:name] }
 
-categories = {}
-
-categories_data.each do |attrs|
-  categories[attrs[:name]] = Category.create!(attrs)
+categories.each_value do |attrs|
+  Category.find_or_initialize_by(name: attrs[:name]).tap do |category|
+    category.assign_attributes(attrs)
+    category.save!
+  end
 end
-
-puts "Создание ингредиентов..."
 
 ingredient_names = [
   "курица", "картофель", "морковь", "лук", "рис", "яйцо", "молоко", "мука",
@@ -47,18 +19,13 @@ ingredient_names = [
   "капуста", "чеснок", "укроп", "овсяные хлопья", "яблоко", "рыба", "лимон"
 ]
 
-ingredients = {}
-
 ingredient_names.each do |name|
-  ingredients[name] = Ingredient.create!(
-    name: name,
-    description: "Популярный ингредиент для домашней кухни."
-  )
+  Ingredient.find_or_create_by!(name: name) do |ingredient|
+    ingredient.description = "Популярный ингредиент для домашней кухни."
+  end
 end
 
-puts "Создание рецептов..."
-
-recipes_data = [
+recipes = [
   {
     title: "Овсяная каша с яблоком",
     category: "Завтраки",
@@ -69,9 +36,9 @@ recipes_data = [
     difficulty: "easy",
     image_url: "https://images.meme-arsenal.com/9119dbf0e54dc3cb8c1317ca677cc92f.jpg",
     ingredients: [
-      ["овсяные хлопья", 80, "г"],
-      ["молоко", 300, "мл"],
-      ["яблоко", 1, "шт"]
+      [ "овсяные хлопья", 80, "г" ],
+      [ "молоко", 300, "мл" ],
+      [ "яблоко", 1, "шт" ]
     ]
   },
   {
@@ -84,12 +51,12 @@ recipes_data = [
     difficulty: "medium",
     image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8Zno8NwCdGLeOGlZRzh_twQdhUIN3XciQWg&s",
     ingredients: [
-      ["курица", 400, "г"],
-      ["картофель", 3, "шт"],
-      ["морковь", 1, "шт"],
-      ["лук", 1, "шт"],
-      ["рис", 60, "г"],
-      ["укроп", nil, "по вкусу"]
+      [ "курица", 400, "г" ],
+      [ "картофель", 3, "шт" ],
+      [ "морковь", 1, "шт" ],
+      [ "лук", 1, "шт" ],
+      [ "рис", 60, "г" ],
+      [ "укроп", nil, "по вкусу" ]
     ]
   },
   {
@@ -102,12 +69,12 @@ recipes_data = [
     difficulty: "hard",
     image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5w8nz-XlF9Nf1-QudQh0IMYnUyDJBnsMufw&s",
     ingredients: [
-      ["говядина", 500, "г"],
-      ["свекла", 2, "шт"],
-      ["капуста", 300, "г"],
-      ["картофель", 3, "шт"],
-      ["чеснок", 2, "зубчика"],
-      ["сметана", nil, "для подачи"]
+      [ "говядина", 500, "г" ],
+      [ "свекла", 2, "шт" ],
+      [ "капуста", 300, "г" ],
+      [ "картофель", 3, "шт" ],
+      [ "чеснок", 2, "зубчика" ],
+      [ "сметана", nil, "для подачи" ]
     ]
   },
   {
@@ -120,11 +87,11 @@ recipes_data = [
     difficulty: "easy",
     image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5bhT43g6MGejDGoPQ10pxADiFpIci2Y_rCA&s",
     ingredients: [
-      ["помидор", 2, "шт"],
-      ["огурец", 2, "шт"],
-      ["сыр", 120, "г"],
-      ["сметана", 2, "ст. л."],
-      ["укроп", nil, "по вкусу"]
+      [ "помидор", 2, "шт" ],
+      [ "огурец", 2, "шт" ],
+      [ "сыр", 120, "г" ],
+      [ "сметана", 2, "ст. л." ],
+      [ "укроп", nil, "по вкусу" ]
     ]
   },
   {
@@ -137,10 +104,10 @@ recipes_data = [
     difficulty: "medium",
     image_url: "https://i.ytimg.com/vi/orWIAaOUXR8/maxresdefault.jpg",
     ingredients: [
-      ["курица", 700, "г"],
-      ["картофель", 6, "шт"],
-      ["лук", 1, "шт"],
-      ["чеснок", 2, "зубчика"]
+      [ "курица", 700, "г" ],
+      [ "картофель", 6, "шт" ],
+      [ "лук", 1, "шт" ],
+      [ "чеснок", 2, "зубчика" ]
     ]
   },
   {
@@ -153,50 +120,27 @@ recipes_data = [
     difficulty: "medium",
     image_url: "https://www.tablicakalorijnosti.ru/file/image/foodstuff/2a9b7308c2144435a4d704781407ebc7/83d2e4c4b3fc44c0a1f5b9da1447d1f7",
     ingredients: [
-      ["творог", 400, "г"],
-      ["яйцо", 1, "шт"],
-      ["мука", 3, "ст. л."],
-      ["сметана", nil, "для подачи"]
+      [ "творог", 400, "г" ],
+      [ "яйцо", 1, "шт" ],
+      [ "мука", 3, "ст. л." ],
+      [ "сметана", nil, "для подачи" ]
     ]
   }
 ]
 
-created_recipes = []
-
-recipes_data.each do |attrs|
-  recipe = Recipe.create!(
-    title: attrs[:title],
-    category: categories.fetch(attrs[:category]),
-    user: user1,
-    description: attrs[:description],
-    instructions: attrs[:instructions],
-    cooking_time: attrs[:cooking_time],
-    servings: attrs[:servings],
-    difficulty: attrs[:difficulty],
-    image_url: attrs[:image_url]
-  )
-
-  created_recipes << recipe
+recipes.each do |attrs|
+  recipe = Recipe.find_or_initialize_by(title: attrs[:title])
+  recipe.assign_attributes(attrs.except(:category, :ingredients).merge(category: Category.find_by!(name: attrs[:category])))
+  recipe.save!
 
   attrs[:ingredients].each do |name, amount, unit|
-    RecipeIngredient.create!(
-      recipe: recipe,
-      ingredient: ingredients.fetch(name),
-      amount: amount,
-      unit: unit
-    )
+    ingredient = Ingredient.find_by!(name: name)
+    recipe.recipe_ingredients.find_or_initialize_by(ingredient: ingredient).tap do |recipe_ingredient|
+      recipe_ingredient.amount = amount
+      recipe_ingredient.unit = unit
+      recipe_ingredient.save!
+    end
   end
 end
 
-puts "Создание избранных рецептов..."
-
-FavoriteRecipe.create!(
-  user: user2,
-  recipe: created_recipes.first
-)
-
-puts "Создание администратора..."
-
-AdminUser.ensure_default_admin! if defined?(AdminUser)
-
-puts "Seeds успешно загружены!"
+AdminUser.ensure_default_admin!
