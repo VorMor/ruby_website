@@ -1,0 +1,10 @@
+<% content_for :title, "Редактирование рецепта" %>
+
+<section class="admin-panel">
+  <div class="admin-title-row">
+    <h1>Редактирование рецепта</h1>
+    <%= link_to "Назад", account_recipes_path %>
+  </div>
+
+  <%= render "form", recipe: @recipe %>
+</section>

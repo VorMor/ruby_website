@@ -7,6 +7,9 @@
     </div>
     <h2><%= link_to recipe.title, recipe_path(recipe) %></h2>
     <p><%= recipe.description %></p>
+    <% if recipe.user.present? %>
+      <p class="card-author">Автор: <%= link_to recipe.user.full_name, user_path(recipe.user) %></p>
+    <% end %>
     <div class="recipe-meta-row">
       <span><%= recipe.difficulty_name %></span>
       <span><%= recipe.servings %> порц.</span>

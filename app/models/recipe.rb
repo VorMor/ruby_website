@@ -7,11 +7,16 @@ class Recipe < ApplicationRecord
     "hard" => "Сложно"
   }.freeze
 
+  attr_writer :ingredients_text
+
   slug_from :title
 
   belongs_to :category
+  belongs_to :user, optional: true
   has_many :recipe_ingredients, dependent: :destroy
   has_many :ingredients, through: :recipe_ingredients
+  has_many :favorite_recipes, dependent: :destroy
+  has_many :favorited_by_users, through: :favorite_recipes, source: :user
 
   accepts_nested_attributes_for :recipe_ingredients, allow_destroy: true
 
@@ -44,6 +49,8 @@ class Recipe < ApplicationRecord
   def self.search_patterns(query)
     raw_query = sanitize_sql_like(query.to_s.strip)
 
+    # SQLite не умеет полноценно приводить кириллицу к нижнему регистру,
+    # поэтому ищем несколько естественных вариантов написания запроса.
     [
       raw_query,
       raw_query.downcase,
@@ -63,6 +70,42 @@ class Recipe < ApplicationRecord
 
   def difficulty_name
     DIFFICULTIES.fetch(difficulty)
+  end
+
+  def ingredients_text
+    @ingredients_text ||= recipe_ingredients.includes(:ingredient).map do |item|
+      amount = item.amount&.to_f&.then { |value| value == value.to_i ? value.to_i : value }
+      [ item.ingredient.name, amount, item.unit.presence, item.note.presence ].compact_blank.join(" | ")
+    end.join("\n")
+  end
+
+  def apply_ingredients_text!(raw_text)
+    @ingredients_text = raw_text
+    parsed_rows = RecipeIngredientParser.new(raw_text).rows
+
+    transaction do
+      recipe_ingredients.destroy_all
+
+      parsed_rows.each do |row|
+        ingredient = Ingredient.find_or_create_by!(name: row[:name])
+        recipe_ingredients.create!(
+          ingredient: ingredient,
+          amount: row[:amount],
+          unit: row[:unit],
+          note: row[:note]
+        )
+      end
+    end
+  end
+
+  def owned_by?(candidate_user)
+    user_id.present? && user_id == candidate_user&.id
+  end
+
+  def favorited_by?(candidate_user)
+    return false unless candidate_user
+
+    favorite_recipes.exists?(user_id: candidate_user.id)
   end
 
   def to_param

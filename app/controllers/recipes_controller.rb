@@ -1,13 +1,13 @@
 class RecipesController < ApplicationController
   def index
     @categories = Category.order(:name)
-    @recipes = RecipeSearch.new(params).call.includes(:category, :ingredients)
+    @recipes = RecipeSearch.new(params).call.includes(:category, :ingredients, :user)
 
     log_search if search_params_present?
   end
 
   def show
-    @recipe = Recipe.published.includes(recipe_ingredients: :ingredient).find_by!(slug: params[:id])
+    @recipe = Recipe.published.includes(:user, recipe_ingredients: :ingredient).find_by!(slug: params[:id])
     @recipe.increment!(:views_count)
   end
 
