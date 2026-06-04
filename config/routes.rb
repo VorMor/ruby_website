@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   namespace :account do
     root "profiles#show"
     resource :profile, only: :show
+    resources :recipes, except: :show
   end
 
   namespace :api, defaults: { format: :json } do

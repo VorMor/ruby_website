@@ -1,0 +1,53 @@
+<%= render "shared/errors", record: recipe %>
+
+<%= form_with model: [ :account, recipe ], class: "admin-form" do |form| %>
+  <label>
+    <span>Название</span>
+    <%= form.text_field :title, required: true %>
+  </label>
+
+  <label>
+    <span>Категория</span>
+    <%= form.collection_select :category_id, Category.order(:name), :id, :name, prompt: "Выберите категорию" %>
+  </label>
+
+  <label>
+    <span>Краткое описание</span>
+    <%= form.text_area :description, rows: 3, required: true %>
+  </label>
+
+  <label>
+    <span>Ингредиенты</span>
+    <%= form.text_area :ingredients_text, rows: 6, placeholder: "курица | 400 | г | филе\nкартофель | 3 | шт\nсоль", value: recipe.ingredients_text %>
+    <small class="form-hint">Каждый ингредиент с новой строки. Разделяйте название, количество, единицу и примечание символом |.</small>
+  </label>
+
+  <label>
+    <span>Инструкция</span>
+    <%= form.text_area :instructions, rows: 7, required: true %>
+  </label>
+
+  <div class="form-grid">
+    <label>
+      <span>Время, мин</span>
+      <%= form.number_field :cooking_time, min: 1, max: 600, required: true %>
+    </label>
+
+    <label>
+      <span>Порции</span>
+      <%= form.number_field :servings, min: 1, max: 40, required: true %>
+    </label>
+
+    <label>
+      <span>Сложность</span>
+      <%= form.select :difficulty, Recipe::DIFFICULTIES.map { |value, label| [ label, value ] } %>
+    </label>
+  </div>
+
+  <label>
+    <span>URL изображения</span>
+    <%= form.url_field :image_url %>
+  </label>
+
+  <%= form.submit "Сохранить", class: "primary-button" %>
+<% end %>

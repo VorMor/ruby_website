@@ -11,6 +11,10 @@
     <h1><%= @recipe.title %></h1>
     <p class="lead"><%= @recipe.description %></p>
 
+    <% if @recipe.user.present? %>
+      <p class="muted-text">Автор: <%= link_to @recipe.user.full_name, user_path(@recipe.user) %></p>
+    <% end %>
+
     <dl class="facts">
       <div><dt>Время</dt><dd><%= @recipe.cooking_time %> мин</dd></div>
       <div><dt>Сложность</dt><dd><%= @recipe.difficulty_name %></dd></div>

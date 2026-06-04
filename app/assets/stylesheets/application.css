@@ -159,6 +159,7 @@ textarea {
 }
 
 .primary-button,
+.secondary-button,
 button,
 .link-button,
 .danger-button {
@@ -179,6 +180,14 @@ button,
 
 .primary-button:hover {
   background: var(--accent-dark);
+}
+
+.secondary-button {
+  background: var(--surface-muted);
+  color: var(--accent-dark);
+  display: inline-flex;
+  justify-content: center;
+  padding: 11px 16px;
 }
 
 .result-summary {
@@ -221,6 +230,10 @@ button,
   margin: 0 0 16px;
 }
 
+.recipe-card .card-author {
+  margin-top: -8px;
+}
+
 .recipe-meta-row {
   align-items: center;
   color: var(--muted);
@@ -228,6 +241,14 @@ button,
   flex-wrap: wrap;
   font-size: 14px;
   gap: 10px;
+}
+
+.favorite-actions {
+  margin: 18px 0;
+}
+
+.favorite-actions form {
+  display: inline;
 }
 
 .pill {
@@ -440,6 +461,12 @@ button,
   color: var(--muted);
   max-width: 720px;
   white-space: pre-line;
+}
+
+.form-hint {
+  color: var(--muted);
+  display: block;
+  margin-top: 6px;
 }
 
 @media (max-width: 920px) {
