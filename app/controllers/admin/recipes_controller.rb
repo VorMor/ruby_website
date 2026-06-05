@@ -2,7 +2,7 @@ class Admin::RecipesController < Admin::BaseController
   before_action :set_recipe, only: %i[edit update destroy publish unpublish]
 
   def index
-    @recipes = Recipe.includes(:category).order(created_at: :desc)
+    @recipes = Recipe.includes(:category, :user).order(created_at: :desc)
   end
 
   def new
@@ -12,7 +12,7 @@ class Admin::RecipesController < Admin::BaseController
   def create
     @recipe = Recipe.new(recipe_params)
 
-    if @recipe.save
+    if save_with_ingredients
       redirect_to admin_recipes_path, notice: "Рецепт создан."
     else
       render :new, status: :unprocessable_entity
@@ -23,7 +23,9 @@ class Admin::RecipesController < Admin::BaseController
   end
 
   def update
-    if @recipe.update(recipe_params)
+    @recipe.assign_attributes(recipe_params)
+
+    if save_with_ingredients
       redirect_to admin_recipes_path, notice: "Рецепт обновлен."
     else
       render :edit, status: :unprocessable_entity
@@ -52,6 +54,23 @@ class Admin::RecipesController < Admin::BaseController
   end
 
   def recipe_params
-    params.require(:recipe).permit(:title, :description, :instructions, :cooking_time, :servings, :difficulty, :image_url, :published, :category_id)
+    params.require(:recipe).permit(:title, :description, :instructions, :cooking_time, :servings, :difficulty, :image_url, :published, :category_id, :user_id)
+  end
+
+  def ingredients_text
+    params.dig(:recipe, :ingredients_text)
+  end
+
+  # Админская форма меняет и рецепт, и состав. Транзакция защищает от частичного сохранения.
+  def save_with_ingredients
+    Recipe.transaction do
+      @recipe.save!
+      @recipe.apply_ingredients_text!(ingredients_text)
+    end
+
+    true
+  rescue ActiveRecord::RecordInvalid
+    @recipe.ingredients_text = ingredients_text
+    false
   end
 end

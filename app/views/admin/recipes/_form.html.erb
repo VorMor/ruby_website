@@ -12,10 +12,21 @@
   </label>
 
   <label>
+    <span>Автор</span>
+    <%= form.collection_select :user_id, User.order(:full_name), :id, :full_name, { include_blank: "Без автора" } %>
+  </label>
+
+  <label>
     <span>Краткое описание</span>
     <%= form.text_area :description, rows: 3, required: true %>
   </label>
 
+  <label>
+    <span>Ингредиенты</span>
+    <%= form.text_area :ingredients_text, rows: 6, placeholder: "курица | 400 | г | филе\nкартофель | 3 | шт\nсоль" %>
+    <small class="form-hint">Каждый ингредиент с новой строки. Формат: название | количество | единица | примечание.</small>
+  </label>
+  
   <label>
     <span>Инструкция</span>
     <%= form.text_area :instructions, rows: 7, required: true %>
