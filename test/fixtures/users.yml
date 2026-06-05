@@ -1,0 +1,13 @@
+anna:
+  email: anna@example.ru
+  password_digest: <%= BCrypt::Password.create("secret123") %>
+  full_name: Анна Поварова
+  bio: Люблю быстрые семейные рецепты.
+  active: true
+
+boris:
+  email: boris@example.ru
+  password_digest: <%= BCrypt::Password.create("secret123") %>
+  full_name: Борис Кулинаров
+  bio: Собираю супы и домашние заготовки.
+  active: true
