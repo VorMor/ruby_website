@@ -243,6 +243,14 @@ button,
   gap: 10px;
 }
 
+.favorite-actions {
+  margin: 18px 0;
+}
+
+.favorite-actions form {
+  display: inline;
+}
+
 .pill {
   background: color-mix(in srgb, var(--pill-color, var(--accent)) 18%, #fff);
   border: 1px solid color-mix(in srgb, var(--pill-color, var(--accent)) 40%, #fff);

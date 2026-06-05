@@ -8,12 +8,15 @@ Rails.application.routes.draw do
   delete "logout", to: "user_sessions#destroy"
 
   resources :users, only: %i[create show]
-  resources :recipes, only: %i[index show]
+  resources :recipes, only: %i[index show] do
+    resource :favorite, only: %i[create destroy], controller: :recipe_favorites
+  end
 
   namespace :account do
     root "profiles#show"
     resource :profile, only: :show
     resources :recipes, except: :show
+    resources :favorites, only: :index
   end
 
   namespace :api, defaults: { format: :json } do

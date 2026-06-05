@@ -32,6 +32,7 @@
            <% if user_signed_in? %>
             <%= link_to "Личный кабинет", account_root_path %>
             <%= link_to "Мои рецепты", account_recipes_path %>
+            <%= link_to "Избранное", account_favorites_path %>
             <%= link_to "Моя страница", user_path(current_user) %>
             <%= button_to "Выйти", logout_path, method: :delete, class: "link-button" %>
           <% else %>

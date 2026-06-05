@@ -1,0 +1,11 @@
+<div class="favorite-actions">
+  <% if user_signed_in? %>
+    <% if recipe.favorited_by?(current_user) %>
+      <%= button_to "Убрать из избранного", recipe_favorite_path(recipe), method: :delete, class: "secondary-button" %>
+    <% else %>
+      <%= button_to "В избранное", recipe_favorite_path(recipe), method: :post, class: "primary-button" %>
+    <% end %>
+  <% else %>
+    <%= link_to "Войдите, чтобы добавить в избранное", login_path, class: "secondary-button" %>
+  <% end %>
+</div>
